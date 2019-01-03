@@ -8,6 +8,8 @@
 # Tanner A. (Student)
 # Chris P. (Instructor)
 
+# Live coding is super sweet!
+
 # Greet User
 import time
 import random
@@ -18,6 +20,7 @@ time.sleep(1.5)
 print("As owner, general manager, and coach, you will call the plays for Dallas.")
 time.sleep(2)
 
+player = "Dallas"
 opponent = random.randint(1, 31)
 
 if opponent == 1:
@@ -71,7 +74,7 @@ elif opponent == 24:
 elif opponent == 25:
     opponent = "Philadelphia"
 elif opponent == 26:
-    opponent = "Pittsburg"
+    opponent = "Pittsburgh"
 elif opponent == 27:
     opponent = "San Francisco"
 elif opponent == 28:
@@ -91,11 +94,11 @@ player_score = 0
 opponent_score = 0
 down = 1
 yards_needed_for_first_down = 0
-team_with_possesion = "Dallas"
+team_with_possession = "Dallas"
 yard_line = 0 # yardLine -50 to 50
 print("Heads or tails? h for heads t for tails.")
-coin_guess = input(">")
-coin_flip = random.randint, (0,1)
+coin_guess = input("> ")
+coin_flip = random.randint(0, 1)
 if coin_flip == 0:
     coin = "h"
 else:
@@ -103,14 +106,58 @@ else:
 
 if coin_guess == coin:
     print("You win the toss; your team goes first.")
-    #Dallas goes first
+    team_with_possession = opponent
 else:
     print("You lose the toss; the other team goes first.")
-    #Other team goes first
+    team_with_possession = player
+
+# Kick Off
+print(team_with_possession + " kicks off!")
+if team_with_possession == player:
+    team_with_possession = opponent
+    yard_line = 20
+else:
+    team_with_possession = player
+    yard_line = -20
+    print(team_with_possession + "'s ball on the 20 yard line.")
 
 # Main Game Loop
-'''
+number_of_plays_run = 0
 game_over = False
 while game_over == False:
-    # do stuff
-'''
+  
+    if team_with_possession == "Dallas":
+        # print("Dallas has ball...")
+        # Prompt Player to Select an Offensive Play
+        print("Select Play")
+        play_selection = input("Enter 1 for Run Play, 2 for Pass Play> ")
+        if play_selection == 1:
+            #print("Run Play Selected!")
+            print(team_with_possession + " Gains 4 Yards on Run Play")
+        else:
+            #print("Pass Play Selected!")
+            print(team_with_possession + " Gains 7 Yards on Pass Play")
+    else:
+      
+        # Jonathan, generate a random number between 0 and 1 (or 1 and 2)
+        # If the random number equals 0, have the offense select a run play
+        # if the random number equals 1, have the offense select a pass play
+        # you will need to create a variable to hold the value of the 
+        # computer opponent's play selection. The human player's play selection
+        # is stored in a variable called 'play', you will need to come up
+        # with a variable name for the computer's play selection. Go!
+        computers_play_selection = random.randint(0, 1)
+        print("Select Play")
+        play = input("Enter 1 for Zone Coverage, 2 for Man Coverage> ")
+
+        if computers_play_selection == 0:
+            # do stuff
+            print(team_with_possession + " Gains 4 Yards on Run Play!")
+        else:
+            # do something else
+            print(team_with_possession + " Gains 7 Yards on Pass Play!")
+
+
+    number_of_plays_run = number_of_plays_run + 1
+    if number_of_plays_run == 63:
+        game_over = True
