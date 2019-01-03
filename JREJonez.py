@@ -86,19 +86,15 @@ elif opponent == 30:
 elif opponent == 31:
     opponent = "Washington"
 
-
 print("Your opponent this week will be " + opponent + ".")
 
-# Initialize Game Variables
-player_score = 0
-opponent_score = 0
-down = 1
-yards_needed_for_first_down = 0
-team_with_possession = "Dallas"
-yard_line = 0 # yardLine -50 to 50
+
+
+# Coin Toss
 print("Heads or tails? h for heads t for tails.")
 coin_guess = input("> ")
 coin_flip = random.randint(0, 1)
+
 if coin_flip == 0:
     coin = "h"
 else:
@@ -106,22 +102,31 @@ else:
 
 if coin_guess == coin:
     print("You win the toss; your team goes first.")
-    team_with_possession = opponent
+    team_with_possession = player
 else:
     print("You lose the toss; the other team goes first.")
-    team_with_possession = player
+    team_with_possession = opponent
+
 
 # Kick Off
-print(team_with_possession + " kicks off!")
 if team_with_possession == player:
-    team_with_possession = opponent
-    yard_line = 20
+    print(opponent + " kicks off!")
 else:
-    team_with_possession = player
-    yard_line = -20
-    print(team_with_possession + "'s ball on the 20 yard line.")
+    print("Dallas kicks off!")
 
-# Main Game Loop
+if team_with_possession == player:
+    yard_line = 20
+    print(team_with_possession + "'s ball on the " + str(yard_line) + " yard line.")
+else:
+    yard_line = 80
+    print(team_with_possession + "'s ball on the " + str(yard_line) + " yard line.")
+
+# Main Game Loop & Game State Variable Declarations
+player_score = 0
+opponent_score = 0
+down = 1
+yards_needed_for_first_down = 0
+team_with_possession = "Dallas"
 number_of_plays_run = 0
 game_over = False
 while game_over == False:
@@ -130,13 +135,33 @@ while game_over == False:
         # print("Dallas has ball...")
         # Prompt Player to Select an Offensive Play
         print("Select Play")
-        play_selection = input("Enter 1 for Run Play, 2 for Pass Play> ")
+        play_selection = int(input("Enter 1 for Run Play, 2 for Pass Play> "))
         if play_selection == 1:
             #print("Run Play Selected!")
             print(team_with_possession + " Gains 4 Yards on Run Play")
+            yard_line = yard_line + 4
+            if yard_line < 100:
+                print("You are at the " + str(yard_line) + " yard line.")
+            else:
+                player_score = player_score + 7
+                print("Touchdown... and the extra point is good!")
+                print("Dallas: " + str(player_score))
+                print(opponent + ": " + str(opponent_score))
+                team_with_possession = opponent
+                yard_line = 80
         else:
             #print("Pass Play Selected!")
             print(team_with_possession + " Gains 7 Yards on Pass Play")
+            yard_line = yard_line + 7
+            if yard_line < 100:
+                print("You are at the " + str(yard_line) + " yard line.")
+            else:
+                player_score = player_score + 7
+                print("Touchdown... and the extra point is good!")
+                print("Dallas: " + str(player_score))
+                print(opponent + ": " + str(opponent_score))
+                team_with_possession = opponent
+                yard_line = 80
     else:
       
         # Jonathan, generate a random number between 0 and 1 (or 1 and 2)
@@ -153,11 +178,34 @@ while game_over == False:
         if computers_play_selection == 0:
             # do stuff
             print(team_with_possession + " Gains 4 Yards on Run Play!")
+            yard_line = yard_line - 4
+            if yard_line >0:
+                print("They are at the " + str(yard_line) + " yard line.")
+            else:
+                opponent_score = opponent_score + 7
+                print("Touchdown for " + opponent)
+                print("Dallas: " + str(player_score))
+                print(opponent + ": " + str(opponent_score))
+                team_with_possession = "Dallas"
+                yard_line = 20
         else:
             # do something else
             print(team_with_possession + " Gains 7 Yards on Pass Play!")
-
+            yard_line = yard_line - 7
+            if yard_line >0:
+                print("They are at the " + str(yard_line) + " yard line.")
+            else:
+                opponent_score = opponent_score + 7
+                print("Touchdown for " + opponent)
+                print("Dallas: " + str(player_score))
+                print(opponent + ": " + str(opponent_score))
+                team_with_possession = "Dallas"
+                yard_line = 20
 
     number_of_plays_run = number_of_plays_run + 1
     if number_of_plays_run == 63:
         game_over = True
+        print("Game over!")
+        print("Dallas: " + str(player_score))
+        print(opponent + ": " + str(opponent_score))
+    
